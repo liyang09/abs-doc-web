@@ -1,0 +1,496 @@
+// 主题风格蓝色系的
+body {
+  color: #666;
+  font-size: 14px;
+  line-height: 1.6;
+  font-family: "Microsoft YaHei";
+  -webkit-font-smoothing: antialiased;
+  margin: 0 !important;
+  padding: 0 !important;
+}
+div, button, span{
+  font-family: "Microsoft YaHei"!important;
+}
+html, body {
+  height: 100%;
+}
+input[disabled]{
+  cursor: not-allowed;
+  opacity: .5;
+}
+*:hover, *:active, *:focus {
+  text-decoration-line: none;
+  -webkit-transition: color .2s linear, background-color .2s linear, border-color .2s linear;
+  transition: color .2s linear, background-color .2s linear, border-color .2s linear;
+}
+
+button[disabled] {
+  cursor: not-allowed;
+  color: #ddd;
+  &:hover {
+    color: #ddd;
+  }
+}
+
+p {
+  padding: 0;
+  margin: 0;
+}
+
+textarea {
+  resize: none;
+}
+
+ul, li {
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+a, a:hover, a:focus {
+  text-decoration: none;
+  outline: none;
+}
+
+::-webkit-scrollbar {
+    width: 10px;
+    height: 10px;
+}
+
+::-webkit-scrollbar-button:start:decrement,
+::-webkit-scrollbar-button:end:increment {
+  width: 0;
+  height: 0
+}
+
+::-webkit-scrollbar-track-piece {
+    border-radius: 10;
+    border-bottom: 2px solid #eee;
+    background: #fff;
+}
+
+::-webkit-scrollbar-track-piece:vertical {
+    border-radius: 10;
+    border-right: 2px solid #eee;
+    background: #fff;
+}
+
+::-webkit-scrollbar-thumb {
+  background-color: rgba(0, 0, 0, .2);
+  background-clip: padding-box;
+  border: solid transparent;
+  border-radius:20px;
+}
+
+::-webkit-scrollbar-thumb:vertical {
+  border-width: 1px 1px 1px 2px;
+  min-height: 24px;
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset 0 -1px 0 rgba(0, 0, 0, .1)
+}
+
+::-webkit-scrollbar-thumb:horizontal {
+  border-width: 2px 1px 1px 1px;
+  min-width: 24px;
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .1), inset -1px 0 0 rgba(0, 0, 0, .1)
+}
+
+::-webkit-scrollbar-thumb:vertical:hover {
+  background-color: rgba(0, 0, 0, .6);
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .5), inset 0 -1px 0 rgba(0, 0, 0, .3)
+}
+
+::-webkit-scrollbar-thumb:horizontal:hover {
+  background-color: rgba(0, 0, 0, .6);
+  box-shadow: inset 1px 1px 0 rgba(0, 0, 0, .5), inset -1px 0 0 rgba(0, 0, 0, .3)
+}
+
+@-webkit-keyframes flash {
+  100% {
+    left: 1000px;
+  }
+}
+
+@-moz-keyframes flash {
+  100% {
+    left: 1000px;
+  }
+}
+
+@-o-keyframes flash {
+  100% {
+    left: 1000px;
+  }
+}
+
+@keyframes flash {
+  100% {
+    left: 1000px;
+  }
+}
+// .el-upload-list >li{
+//   .el-upload-list__item-name .iconexcel{
+//       font-size: 35px;
+//       float: left;
+//       position: relative;
+//       top: -20px;
+//       left: -0px;
+//       color: green;
+//   }
+//   .el-progress-bar__inner{
+//     background-color: #9DA5B2;
+//   }
+// }
+// .el-upload-list__item .el-progress{
+//   padding-left: 40px;
+//   box-sizing: border-box;
+//   .el-progress-bar__outer {
+//     height: 7px!important;
+//   }
+// }
+.dialog-class{
+  /deep/ .el-dialog__header{
+    padding: 15px 20px;
+    .el-dialog__title{
+      font-size: 16px;
+      font-weight: 700;
+    }
+  }
+  /deep/.el-dialog__body {
+    padding: 0!important;
+  }
+  /deep/ .el-dialog__footer {
+    text-align: left!important;
+  }
+}
+.invoice-dialog{
+  /deep/.el-dialog__body {
+    padding: 20px!important;
+  }
+  .table-content{
+    border: 1px solid #EDEDED;
+    .el-table__body-wrapper{
+      max-height: calc(100vh - 433px);
+      min-height: 300px;
+      overflow-y: auto;
+    }
+  }
+  .el-form {
+    max-height: calc(100vh - 433px);
+    overflow: auto;
+  }
+}
+.invoice-detail-dialog{
+  /deep/.el-dialog__body {
+    padding: 20px 20px 40px!important;
+  }
+}
+.bread-crumb{
+  position: absolute;
+  top: 86px;
+  .el-breadcrumb__item{
+    font-size: 16px;
+    &:nth-child(2) {
+      cursor: pointer;
+    }
+    &:nth-child(3) .el-breadcrumb__inner{
+      font-weight: 600;
+    }
+  }
+  .hover-color{
+    &:hover .el-breadcrumb__inner{
+      color: #409EFF;
+    }
+  }
+}
+.top-right-corner-upload, .result-export{
+ position: absolute;
+ top: 80px;
+ right: 20px;
+ img{
+   width: 35px;
+   height: 30px;
+   position: relative;
+   top: 0px;
+   right: 22px;
+   cursor: pointer;
+  }
+  .el-badge__content.is-fixed{
+    right: 33px;
+  }
+}
+.folder-popover{
+  padding: 20px 40px;
+  box-sizing: border-box;
+  p{
+    margin-top: 18px;
+  }
+  .el-popover__title{
+    text-align: center;
+    font-size: 18px;
+    color: #303133;
+  }
+  .popover-content{
+    max-height: 320px;
+    overflow: auto;
+  }
+  .iconimg{
+    font-size: 30px;
+    top: 11px;
+    position: relative;
+  }
+  .el-progress{
+    padding-left: 36px;
+  }
+}
+
+.export-asset-drawer {
+  $checkBoxColor: #0091FF;
+  outline: none;
+  .el-drawer__header {
+    padding: 20px;
+    margin-bottom: 0;
+    border-bottom: 1px solid #EFEFF1;
+  }
+  .contents{
+    .el-button, .el-button:hover, .el-button:focus{
+      color: $checkBoxColor;
+    }
+    .el-button:active{
+      color: $checkBoxColor;
+    }
+    .el-checkbox-group{
+      .el-checkbox-button {
+        margin: 10px 10px 10px 0;
+      }
+      .el-checkbox-button__inner{
+        border:1px solid rgba(153,153,153,0.1);
+        border-radius: 0;
+        max-width: 369px;
+        white-space: normal;
+        text-align: left;
+        line-height: 20px;
+        &:hover{
+          color: $checkBoxColor;
+        }
+      }
+    }
+    .el-checkbox-button.is-checked .el-checkbox-button__inner{
+      color: $checkBoxColor;
+      border-color: $checkBoxColor;
+      background-color: #fff;
+      box-shadow: none;
+    }
+    .el-checkbox-group{
+      max-height: calc(100vh - 370px);
+      height: calc(100vh - 370px);
+      overflow: auto;
+    }
+  }
+  .assetQuery{
+    .el-checkbox-group{
+      max-height: calc(100vh - 270px);
+      height: calc(100vh - 270px);
+      overflow: auto;
+    }
+  }
+}
+
+.tipsInfo{
+  $themeColor: #FDB636;
+  // $themeColor: #FF4040;
+  .el-message-box__btns{
+    .el-button{
+      width: 60px;
+      height: 32px;
+      border: none;
+      background: $themeColor;
+      font-size: 14px;
+      &:first-child{
+        background: none;
+        color: #666666;
+      }
+    }
+  }
+}
+.pdf-viewer{
+  .el-loading-mask{
+    background-color: unset;
+  }
+  .el-dialog{
+    width: 100%;
+    height: 100%;
+    overflow: hidden;
+    margin: 0;
+    background: none;
+    border: none;
+    box-shadow: none;
+  }
+  .el-dialog__header{
+    // display: none;
+    height: 0;
+    padding: 0;
+    .el-dialog__close{
+      color: #d2d2d2;
+      font-size: 26px;
+      border: 3px solid;
+      border-radius: 26px;
+      position: relative;
+      z-index: 10;
+      &:hover{
+        color: #d2d2d2;
+      }
+    }
+  }
+  .el-dialog__body{
+    padding: 0!important;
+    color: #606266;
+    font-size: 14px;
+    word-break: break-all;
+    height: calc(100vh);
+    overflow: hidden;
+    .pdf{
+      left: 50%;
+      top: 50%;
+      transform: translate(-50%, -50%);
+    }
+  }
+}
+.borderRadiu12{
+  border-radius: 12px;
+  overflow: hidden;
+}
+// .el-checkbox__input.is-checked .el-checkbox__inner, .el-checkbox__input.is-indeterminate .el-checkbox__inner {
+//   background-color: #CAA14F !important;
+//   border-color: #CAA14F !important;
+// }
+// .el-checkbox__input.is-focus .el-checkbox__inner{
+//   border-color: #CAA14F !important;
+// }
+// .el-checkbox__inner:hover{
+//   background-color: #CAA14F !important;
+//   border-color: #CAA14F !important;
+// }
+// .el-table--border{
+//   border-radius:12px;
+// }
+// .table-content{
+//   margin-top:86px;
+//   border-right:none !important;
+// }
+// .el-table{
+//   border-right:1px solid #EBEEF5 !important;
+// }
+// .el-checkbox-button__inner:hover {
+//   color: #E59D28;
+// }
+
+.el-dialog__header{
+  text-align:center;
+}
+.contractDetail li a {
+  color: #286090;
+}
+.dialog-footer{
+  text-align: center;
+  margin-top:30px;
+}
+.elInput input, .elSelect input, .elPiker input, .setp .el-form-item__content .el-input__inner {
+  border: 0;
+  border-radius: 0;
+  border-bottom: 1px solid #bfcbd9;
+}
+.enterpriseItem{
+  margin-bottom: 10px;
+}
+.btnCenter{
+  margin: 20px 0;
+  text-align: center;
+}
+.el-input.is-disabled .el-input__inner{
+  color: #515e77;
+}
+.collectBtn{
+  margin-right:10px;
+}
+.el-dropdown-link {
+    cursor: pointer;
+    color: #409EFF;
+  }
+  .el-icon-arrow-down {
+    font-size: 12px;
+  }
+
+  
+.addFormClass .contractInfo {
+  padding: 0 10px;
+  border: 1px solid #e7ecf1;
+  margin-bottom: 20px;
+}
+.addFormClass .entryInfo {
+  border: 1px solid #e7ecf1;
+}
+
+.addFormClass .elLable {
+  font-size: 14px;
+  text-align: right;
+  line-height: 36px;
+  margin-right: 10px;
+}
+
+.addFormClass .entryInfo .elCol {
+  margin-bottom: 15px;
+}
+
+.addFormClass .portlet-title {
+  border-bottom: 1px solid #eef1f5;
+  padding: 0;
+  height: 58px;
+}
+
+.addFormClass .portlet-title > .caption {
+  color: #8E44AD;
+  line-height: 58px;
+}
+
+.addFormClass .portlet-title > .caption > .caption-subject {
+  font-size: 16px;
+}
+
+.addFormClass .nextBtn {
+  position: relative;
+  min-height: 36px;
+}
+
+.addFormClass .nextBtn > button {
+  position: absolute;
+  left: 50%;
+  top: 0;
+  margin-left: -37px;
+}
+
+.el-breadcrumb__inner, .el-breadcrumb__separator {
+  color: #343957;
+}
+.el-menu--collapse {
+  width: 51px !important;
+}
+.el-tabs__nav-wrap::after {
+  background-color: #ffffff !important; 
+}
+.el-breadcrumb__item:last-child .el-breadcrumb__inner, .el-breadcrumb__item:last-child .el-breadcrumb__inner:hover {
+  color: #333;
+  font-weight: 600;
+}
+
+.el-dropdown-menu__item button{
+  width:100% !important;
+}
+.el-dropdown-menu__item button span{
+  width: 100%;
+  display: inline-block;
+  text-align: left;
+}
+.borderRadiu12{
+  border-radius: 12px;
+  overflow: hidden;
+}

@@ -1,0 +1,40 @@
+@import "./_reset";
+.iconMore{
+    transform:rotate(90deg);
+    -ms-transform:rotate(90deg); /* Internet Explorer */
+    -moz-transform:rotate(90deg); /* Firefox */
+    -webkit-transform:rotate(90deg); /* Safari 和 Chrosme */
+    -o-transform:rotate(90deg); /* Opera */
+}
+.el-drawer.rtl{
+overflow:auto;
+}
+.el-drawer__header{
+    margin-bottom:0;
+}
+#el-drawer__title span{
+    font-size: 16px;
+    color: #333333;
+}
+.addFormClass .contractInfo{
+    border:none;
+}
+.el-upload-dragger{
+    padding-top:30px;
+    height:130px;
+}
+.el-upload__text{
+    margin-top:20px;
+}
+.detailAdd{
+    text-align:center;
+    padding:20px 0;
+    border-bottom:1px solid #EBEEF5;
+}
+.detailAdd span{
+    cursor: pointer;
+}
+.selectForm{
+    display:inline-block;
+    float:right;
+}

@@ -1,0 +1,155 @@
+/* 主题风格红色系的 */
+.el-aside {
+    background: white !important;
+}
+
+.el-menu-item {
+    font-family: "PingFangSC-Medium";
+    font-size: 14px;
+    color: #666666 !important;
+}
+
+.el-submenu__title {
+    color: #4A3718 !important;
+}
+
+.el-submenu.is-active>div {
+    background-image: linear-gradient(107deg, #FF8C03 0%, #FF5801 86%, #FF5701 88%);
+    color: white !important;
+}
+
+.el-submenu.is-active i {
+    color: white !important;
+}
+
+.el-submenu.is-active li.is-active {
+    color: #FF5701 !important;
+}
+
+.el-menu-item:hover {
+    background: white !important;
+    color: #FF5701 !important;
+}
+
+.el-submenu__title:hover {
+    background: white !important;
+}
+
+.el-submenu.is-active .el-submenu__title:hover {
+    background-image: linear-gradient(107deg, #FF8C03 0%, #FF5801 86%, #FF5701 88%) !important;
+}
+
+.el-menu-item.is-active {
+    color: #FF5701 !important;
+}
+
+.noSub.el-menu-item.is-active {
+    background: linear-gradient(107deg, #FF8C03 0%, #FF5801 86%, #FF5701 88%) !important;
+    color: white !important;
+}
+
+.el-button--primary.addButton {
+    background: #FFFFFF;
+    border-radius: 2px;
+    border-radius: 2px;
+    border: none;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.05);
+    color: #FF5701;
+}
+
+.addButton:hover {
+    color: #FF5701;
+}
+
+.redBtn:hover {
+    color: #FF5701;
+}
+
+.iconMore {
+    color: #333333;
+}
+
+.iconMore:focus {
+    color: #FF5701;
+}
+
+.collectBtn {
+    color: #333333;
+}
+
+.collectBtn:hover {
+    color: #FF5701;
+}
+
+.collectBtn.redBtn {
+    color: #FF5701;
+}
+
+.el-button--primary.is-disabled,
+.el-button--primary.is-disabled:active,
+.el-button--primary.is-disabled:focus,
+.el-button--primary.is-disabled:hover {
+    background: #c59c87;
+    border-color: #c59c87;
+}
+
+.uploadButton {
+    padding: 5px 15px;
+    color: #FF5701;
+    border: 1px solid #FF5701;
+}
+
+.redColor {
+    color: #FF5701;
+}
+
+.el-button--primary.primaryButton, .el-button--primary.primaryButton2 {
+    background: #FF5701;
+    border-color: #FF5701;
+}
+
+.el-button--primary.primaryButton:hover {
+    border-color: #FF5701;
+    background: #FF5701;
+    color: white;
+}
+
+.el-checkbox__input.is-checked .el-checkbox__inner,
+.el-checkbox__input.is-indeterminate .el-checkbox__inner {
+    background-color: #FF5701 !important;
+    border-color: #FF5701 !important;
+}
+
+.el-checkbox__input.is-focus .el-checkbox__inner {
+    border-color: #FF5701 !important;
+}
+
+.el-checkbox__inner:hover {
+    border-color: #FF5701 !important;
+}
+.el-table {
+    border-right: 1px solid #EBEEF5 !important;
+}
+
+.el-checkbox-button__inner:hover {
+    color: #FF5701;
+}
+.el-tabs__item.is-active {
+    color: #FF5701 !important;
+}
+.el-tabs__item:hover {
+    color:  #FF5701 !important;
+}
+.el-tabs__active-bar {
+    background-color:  #FF5701 !important;
+    /* width: 14%!important;
+    margin-left: 13%!important; */
+}
+.el-message-box .el-button--primary {
+    color: #FFF;
+    background-color: #FF5701 !important;
+    border-color: #FF5701 !important;
+}
+.zhuisuDialog .el-dialog__body{
+    padding-top: 0px !important;
+}

@@ -1,0 +1,245 @@
+.doc {
+    padding-top: 8px;
+    width: 237px;
+    height: 100%;
+    border-right: 1px solid #EBEEF5;
+
+    /deep/ .el-input__inner:hover,
+    .el-input__inner:focus {
+        outline: none !important;
+    }
+
+    span:focus {
+        outline: none;
+    }
+
+    .treeItem {
+        position: relative;
+        margin-bottom: 5px;
+        padding: 0 6px 0 11px;
+        width: 100%;
+        height: 25px;
+        line-height: 25px;
+
+        img {
+            display: inline-block;
+            margin-top: 6px;
+            margin-right: 6px;
+            width: 14px;
+            height: 14px;
+        }
+
+        .typeIcon {
+            margin-right: 4px;
+        }
+
+        .triangle {
+            font-size: 12px;
+            color: #7F7F7F;
+        }
+
+        .operList {
+            position: absolute;
+            right: 15px;
+            top: 13px;
+            width: 80px;
+            background: #fff;
+            box-shadow: 0px 0px 8px 0px rgba(52,57,87,0.1);
+            z-index: 90;
+            font-size: 12px;
+            color: #343957;
+
+            li {
+                height: 24px;
+                line-height: 24px;
+            }
+
+            li.newFolder {
+                border-top: 1px solid #EDEDED;
+                border-bottom: 1px solid #EDEDED;
+            }
+
+            li.downLoad {
+                border-bottom: 1px solid #EDEDED;
+            }
+
+            li.active {
+                color: #fff;
+                background: #318EFA;
+            }
+        }
+
+        
+
+        .treeItemEdit {
+            width: 90px;
+            height: 20px;
+
+            /deep/ .el-input__inner {
+                padding: 0 3px;
+                height: 20px !important;
+                line-height: 20px !important;
+                border-radius: 0;
+                // background: #B1D8FF;
+            }
+        }
+
+        /deep/.el-checkbox__input.is-checked .el-checkbox__inner {
+            background-color: #fff;
+            border-color: #fff;
+            border-radius: 0;
+        }
+
+        /deep/.el-checkbox__inner::after {
+            border-color: #0069D9;
+        }
+    }
+
+    // .treeItem.active {
+    //     color: #fff;
+    //     background: #318EFA;
+    //     .weightInput /deep/.el-input__inner {
+    //         color: #fff;
+    //         outline: none;
+    //     }
+    //     .weightInput.active /deep/ .el-input__inner {
+    //         color: #333;
+    //         outline: none;
+    //     }
+    //     .triangle {
+    //         color: #fff;
+    //     }
+    // }
+
+    .weightInput /deep/.el-input__inner {
+        padding: 0 !important;
+        height: 17px !important;
+        text-align: right;
+        border-radius: 0 !important;
+        border-width: 0;
+        font-size: 12px;
+        background: transparent;
+        outline: none;
+    }
+
+    .weightInput.active {
+        /deep/ .el-input__inner {
+            border-width: 1px !important;
+            background: #fff;
+            text-align: center;
+            color: #333;
+        }
+    }
+
+    .emptyWrap {
+        position: relative;
+        width: 237px;
+        height: 100%;
+        border-right: 1px solid #EBEEF5;
+    }
+    .emptyBtn {
+        position: absolute;
+        left: 0;
+        top: 0;
+        right: 0;
+        bottom: 0;
+        margin: auto;
+        width: 80px;
+        height: 29px;
+        line-height: 29px;
+        background: #fff;
+        box-shadow: 0px 0px 8px 0px rgba(52,57,87,0.1);
+    }
+
+    .addFolder {
+        margin-top: 10px;
+        height: 28px;
+        line-height: 26px;
+        border: 1px solid #E59D28;
+        color: #E59D28;
+    }
+
+    .selectFolder {
+        position: relative;
+        top: -8px;
+        padding: 3px 0px 0 11px;
+        height: 27px;
+        margin-bottom: 1px;
+        background: #fafafa;
+
+        /deep/.el-checkbox__inner {
+            border-radius: 0;
+        }
+
+        /deep/.el-checkbox__input.is-checked + .el-checkbox__label {
+            color: #666;
+        }
+
+        .selectFolderAll {
+            margin-right: 20px;
+        }
+    }
+
+    .downloadBtn {
+        padding: 3px 3px;
+        background-color: #0091FF;
+        border-color: #0091FF;
+        border-radius: 2px;
+    }
+
+}
+.imgWrap {
+    // position: relative;
+    display: flex;
+    flex-direction: column;
+    flex: 1;
+    height: 100%;
+    overflow-y: auto;
+    .imgCont {
+        margin-top: 67px;
+        margin-bottom: 14px;
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        height: 423px;
+    }
+    .img {
+        // width: 600px;
+        width: 70%;
+        height: auto;
+    }
+    p {
+        font-size: 18px;
+        font-weight: 550;
+        color: #333333;
+    }
+
+    .info {
+        display: flex;
+        justify-content: center;
+        width: 100%;
+        ul {
+            margin-top: 70px;
+            width: 195px;
+
+            li {
+                display: flex;
+                justify-content: space-between;
+                height: 20px;
+                line-height: 20px;
+                font-size: 12px;
+
+                i:nth-child(1) {
+                    color: #999;
+                }
+
+                i:nth-child(2) {
+                    display: inline-block;
+                    width: 120px;
+                    color: #333;
+                }
+            }
+        }
+    }
+
+}
