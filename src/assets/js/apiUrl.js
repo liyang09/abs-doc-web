@@ -13,7 +13,7 @@ export let apiUrl = {
     cancelAuth:currentApiUrl+ '/auth/cancelAuth',//取消企业授权
     // tradeAuthQuery:currentApiUrl+ '/auth/query',//已授权企业查询
     tradeAuthQuery:currentApiUrl+ '/auth/queryToOrg',//已授权企业查询
-    getOrgInfoByOrgId:currentApiUrl3 + '/org-info/getOrgInfoByOrgId/' , //根据orgId查询企业
+    getOrgInfoByOrgId:currentApiUrl + '/org-info/getOrgInfoByOrgId/' , //根据orgId查询企业
     querySettlementByContract:currentApiUrl + '/asset/querySettlementByContract',//根据合同查询结算单
     pushFullAssetPackage:currentApiUrl + '/asset/pushFullAssetPackage',//合同下的结算单推送
     getAssetGraphUuid:currentApiUrl + '/graph/pattern-graph/asset-graph-uuid/',//获取patterenGraphUuid
@@ -39,7 +39,7 @@ export let apiUrl = {
     deleteBusiness:currentApiUrl + '/org-info/delete',//删除企业
     saveBusiness:currentApiUrl + '/org-info/save',//添加企业
     updateBusiness:currentApiUrl +　'/org-info/update',//更新企业
-    getStatistic:currentApiUrl3 + '/asset/statistic',//首页获取统计数据
+    getStatistic:currentApiUrl + '/asset/statistic',//首页获取统计数据
     // confirmRecvgGoods:currentApiUrl + '/asset/confirmRecvgGoods/by',//单条确认收货
     // confirmRecvgGoodsByBatch:currentApiUrl + '/asset/confirmRecvgGoodsByBatch',//批量确认收货
     getPatternGraphInfos:currentApiUrl + '/graph/pattern-graph-infos/get',//获取业务类型  会玲提供的接口，前面增加了graph.
@@ -75,9 +75,9 @@ export let apiUrl = {
     assetUrl: apiGateway + '/asset-config',
 
     //文档管理新的接口
-    tableAssetName:currentApiUrl2 + '/asset/attribute-config/table/list',//配置查询
-    assetAdd:currentApiUrl2 + '/asset/attribute-config/adds',//设置里面的保存
-    docAdd:currentApiUrl2 + '/config/attribute-config/edit',//设置文档里面的保存
-    tablefile:currentApiUrl2 + '/asset/attribute-config/table/file',//文档查询
-    auditSubmit:currentApiUrl3 + '/asset/audit',//提交审核
+    tableAssetName:currentApiUrl + '/asset/attribute-config/table/list',//配置查询
+    assetAdd:currentApiUrl + '/asset/attribute-config/adds',//设置里面的保存
+    docAdd:currentApiUrl + '/config/attribute-config/edit',//设置文档里面的保存
+    tablefile:currentApiUrl + '/asset/attribute-config/table/file',//文档查询
+    auditSubmit:currentApiUrl + '/asset/audit',//提交审核
 }

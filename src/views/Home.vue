@@ -65,7 +65,6 @@
 
         },
         mounted () {
-            this.getDataSource();
             this.projectAddress = this.$appConst.projectAddress;
             if (sessionStorage.getItem('systemType')) {
                 this.address = sessionStorage.getItem('systemType')
@@ -74,30 +73,6 @@
             }
         },
         methods: {
-            getDataSource () {
-              const url = `${this.$appConst.absCommonApiUrl}/listDynamicDatasource`
-              this.$http.get(url)
-                .then(res => {
-                  const { data } = res.data
-                //   this.dataSourceList = data
-                //   this.selectedDataSource = data[0]
-                  this.dataSourceChange(data[0])
-                })
-            },
-            dataSourceChange (val) {
-                const { tenantName, description } = val
-                sessionStorage.setItem('currentDataSource', tenantName)
-                // let width = '200px'
-                // if (description && description.length) {
-                //     width = (description.length * 20 + 50) + 'px'
-                // }
-                // $('.datasource-select').width(width)
-                // this.routerShow = false
-                // let timer = setTimeout(() => {
-                //     this.routerShow = true
-                //     clearTimeout(timer)
-                // }, 10)
-            },
             handleDataTypeChange () {
                 let access_token = sessionStorage.getItem('access_token');
                 let url = `${this.address}`;

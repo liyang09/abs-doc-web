@@ -13,7 +13,6 @@ export default{
     edocUrl: bizUrl,
     bucketName: bucketName,
     assetIdentification: assetIdentification,
-    absCommonApiUrl: absCommonApiUrl,
     systemSelectShow: systemSelectShow,
     projectAddress: projectAddress,
     SYSTEMS:SYSTEMS,

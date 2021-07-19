@@ -5,24 +5,11 @@ export default [
         "title": "首页",
         "subs": []
     }, 
-    // {
-    //     "icon": "el-icon-s-home",
-    //     "index": "/projectManage",
-    //     "title": "项目管理",
-    //     "subs": []
-    // }, 
     {
         "icon": "el-icon-search",
         "index": "21",
         "title": "资料管理",
         "subs": [
-            // {
-            //     "index": "/contractQuery",
-            //     "title": "导入资产",
-            //     "billType": "contract",
-            //     "enterprise": ['ems', 'hsyy', 'jhyy', 'zhyy', 'tyjt', 'yzyy', 'tlyy', 'ycdl', 'rlhk', 'yjgf', 'kggm', 'xydc', 'mlf', 'yjjt'],
-            //     "authRole": ['CORE_ENT', 'SUPPLIER']
-            // },
             {
                 "index": "/commonAsset2/com.evisible.entity.base.common.entity.AssetEntity",
                 "title": "文档管理",
@@ -41,6 +28,12 @@ export default [
             },
         ]
     },
+    {
+        "icon": "el-icon-s-tools",
+        "index": "/setting",
+        "title": "设置",
+        "subs": []
+    }, 
     // {
     //     "icon": "el-icon-menu",
     //     "index": "11",
@@ -196,10 +189,4 @@ export default [
     //         },
     //     ]
     // },
-    {
-        "icon": "el-icon-s-tools",
-        "index": "/setting",
-        "title": "设置",
-        "subs": []
-    }, 
 ]

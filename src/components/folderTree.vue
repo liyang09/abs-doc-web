@@ -204,10 +204,6 @@
             }
         },
         watch: {
-            // folders () {
-            //     console.log(this.folderOption.assetInfo.directories, '9998888777777')
-            //     return (this.folderOption.assetInfo.directories || [])
-            // },
             folderPath () {
                 this.uploadOption.folderPath = this.folderPath
             },
@@ -216,10 +212,6 @@
             // }
         },
         computed: {
-            // folders () {
-            //     console.log(this.folderOption.assetInfo.directories, '9998888777777')
-            //     return (this.folderOption.assetInfo.directories || [])
-            // },
             canUpload () {
                 // return false
                 return (this.folderOption.canUpload || false)
@@ -285,15 +277,12 @@
         methods: {
             init () {
                 this.folderTreeVisible = false
-                console.log('5555')
                 this.initialize()
-                 console.log('6666')
                 // this.$store.commit('SET_PENDINGFILELIST', [])
                 this.$nextTick(() => {
                     this.folderTreeVisible = true
                 })
                 this.uploadOption.assetInfo = this.folderOption.assetInfo
-                console.log(this.folderOption.assetInfo, 'this.folderOption.assetInfo')
                 // if (this.folderOption.assetInfo && this.folderOption.assetInfo.directories) return
                 if (this.folderOption.assetInfo && this.folderOption.assetInfo.directories && this.folderOption.assetInfo.directories.length) return
                 this.queryDirectories()
@@ -330,18 +319,17 @@
                     tableEnName: this.$appConst.tableEnNameAsset,
                     projectName: this.$appConst.setProjectName
                 }
-                // const loading = this.$loading({
-                //     lock: true,
-                //     text: 'Loading',
-                //     spinner: 'el-icon-loading',
-                //     background: 'rgba(0, 0, 0, 0.7)'
-                // });
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
                 this.$http.get(url, { params }).then(res => {
                     if (res.data.status === 200) {
                         let arr = [];
                         let defaultValue = {};
                         if(res.data.data && res.data.data.length) {
-                            console.log('走000000000')
                             defaultValue = res.data.data[0].defaultValue ? res.data.data[0].defaultValue : {};
                             arr = defaultValue.directories;
                         } else {
@@ -350,11 +338,10 @@
                         this.folderOption.assetInfo.directories = arr;
                         this.folders = arr;
                         this.uploadOption.assetInfo = this.folderOption.assetInfo;
-                        console.log(this.folderOption.assetInfo.directories, 'this.folderOption.assetInfo.directories', this.folderOption)
                     }
-                    // loading.close();
+                    loading.close();
                 }).catch(err => {
-                    // loading.close();
+                    loading.close();
                     this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
                 });
             },
@@ -456,7 +443,6 @@
                     // arrStr = `['${temPath.join().replace(/,/g, '/')}']`
                     arrStr.push(`${temPath.join().replace(/,/g, '/')}`)
                 }
-                // console.log(arrStr)
                 // const directories = this.base64Encode(arrStr)
                 this.downloadZip(arrStr, folder)
             },

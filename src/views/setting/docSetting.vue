@@ -45,18 +45,17 @@
                     params.projectName = this.$appConst.setProjectName;
                     url = this.$apiUrl.tablefile;
                 }
-                // const loading = this.$loading({
-                //     lock: true,
-                //     text: 'Loading',
-                //     spinner: 'el-icon-loading',
-                //     background: 'rgba(0, 0, 0, 0.7)'
-                // });
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
                 this.$http.get(url, { params }).then(res => {
                     if (res.data.status === 200) {
                         let arr = [];
                         let defaultValue = {};
                         if(res.data.data && res.data.data.length) {
-                            console.log('走值')
                             defaultValue = res.data.data[0].defaultValue ? res.data.data[0].defaultValue : {};
                             arr = defaultValue.directories;
                             this.fieldEnNameStart = res.data.data[0].fieldEnName ? res.data.data[0].fieldEnName: '';
@@ -68,8 +67,9 @@
                         console.log(this.treeData, 'this.treeData')
                         this.defaultTreeData = JSON.parse(JSON.stringify(arr))
                     }
-                    // loading.close();
+                    loading.close();
                 }).catch(err => {
+                    loading.close();
                     this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
                 });
             },
@@ -93,7 +93,6 @@
 
                   this.mainTable.tableData = content;
                   this.tabData = content;
-                  console.log(content, '3333333333333')
                   loading.close()
                 }).catch(err => {
                   loading.close()
@@ -130,13 +129,10 @@
                 // })
             },
             handleSaveConfig (tableParams ) {
-                console.log(tableParams, 'tableParams333')
-                console.log('arrr6666666666', this.fieldEnNameStart)
                if(!this.fieldEnNameStart) {
                     this.$message.warning('无初始名，请联系后端配置！')
                     return;
                 }
-                console.log('4445555', this.fieldEnNameStart)
                 let arr = JSON.parse(JSON.stringify(tableParams));
                 arr.forEach((item, index) => {
                     if(item.fieldEnName === this.fieldEnNameStart) {
@@ -147,25 +143,23 @@
                     }
                 })
                 let params = {
-                    // defaultValue: this.$refs.treeComponent.treeData,
                     attributeConfigVos: arr,
                     tableName: this.$appConst.setProjectName,
-                    // tableConfigId: 2
                     tableConfigId: this.$appConst.tableConfigId
                 }
-                // const loading = this.$loading({
-                //     lock: true,
-                //     text: 'Loading',
-                //     spinner: 'el-icon-loading',
-                //     background: 'rgba(0, 0, 0, 0.7)'
-                // });
+                const loading = this.$loading({
+                    lock: true,
+                    text: 'Loading',
+                    spinner: 'el-icon-loading',
+                    background: 'rgba(0, 0, 0, 0.7)'
+                });
                 this.$http.post(`${this.$apiUrl.assetAdd}`, params).then(res => {
                     if (res.data.status === 200) {
                         this.$message.success("保存成功！")
                     }
-                        // loading.close();
+                        loading.close();
                     }).catch(err => {
-                        // loading.close();
+                        loading.close();
                         this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
                     });
             },

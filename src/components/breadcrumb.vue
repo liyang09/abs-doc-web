@@ -30,8 +30,8 @@ export default {
   .box {
     background: #FFFFFF;
     box-shadow: 0 2px 4px 0 rgba(0,0,0,0.05);
-    height: 44px;
-    line-height: 44px;
+    // height: 44px;
+    // line-height: 44px;
     margin: 0 0 18px;
     padding-left: 15px;
     color: #343957;

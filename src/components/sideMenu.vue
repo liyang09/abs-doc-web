@@ -135,7 +135,6 @@ import {mapMutations} from 'vuex'
             // let dataAuthorization = JSON.parse(JSON.stringify(menuList.filter(item => item.index === '12')[0])); // 查贸易管理菜单
             // dataAuthorization.index = '13';
             // dataAuthorization.title = '授权数据';
-            // console.log(dataAuthorization, '11111')
             // dataAuthorization.subs.map(item => {
             //     if (item.index.indexOf('contractQuery') !==-1) {
             //         item.index = '/dataAuthorization/TRADECONTRACT';
@@ -145,10 +144,8 @@ import {mapMutations} from 'vuex'
             //     }
             //     return 0;
             // });
-            //  console.log(dataAuthorization, '222222')
             // if (menuList.filter(item => item.index === '13').length === 0) {
             //     menuList.push(dataAuthorization);
-            //     console.log(menuList, '3333333')
             // }
         },
         // 匹配菜单
@@ -157,7 +154,6 @@ import {mapMutations} from 'vuex'
             let roleType = JSON.parse(sessionStorage.getItem("authorizationRoleType")); // 核心企业  供应商  第三方
             let nowBusinessScenarios = this.$appConst.nowBusinessScenarios; // 当前用户简称
             let userRolesIsManager = sessionStorage.getItem("userRolesIsManager"); // 当前用户 是否是 企业管理员
-            console.log(menuList, '44444444')
             // menuList.map((val, index) => {
             //     if(val.hasOwnProperty("subs")) {
             //         this.menuList[index].subs = [];
@@ -171,7 +167,6 @@ import {mapMutations} from 'vuex'
             //                 // 不含 场景/授权/角色 限制
             //                 if(!isHasEnterprise && !isHasAuthRole && !isHasUserRole) {
             //                     this.menuList[index].subs.push(item)
-            //                     console.log(this.menuList, '555555')
             //                 }
             //                 // 包含场景/授权限制  不含角色限制
             //                 if(isHasEnterprise && isHasAuthRole && !isHasUserRole) {
@@ -189,7 +184,6 @@ import {mapMutations} from 'vuex'
             //                             this.menuList[index].subs.push(item)
             //                         }
             //                     }
-            //                     console.log(this.menuList, '6666666')
             //                 }
             //                 // 包含 场景/授权/用户角色限制
             //                 if(isHasEnterprise && isHasAuthRole && isHasUserRole) {
@@ -209,7 +203,6 @@ import {mapMutations} from 'vuex'
             //                             this.menuList[index].subs.push(item)
             //                         }
             //                     }
-            //                     console.log(this.menuList, '77777777777')
             //                 }
             //             }
             //         }
@@ -231,12 +224,10 @@ import {mapMutations} from 'vuex'
         $('#fixedIcon').css({"width":"220px"});
         await this.detailWithMenuList();
         var vm = this;
-        console.log('走1')
         vm.handleSetSideItem();
-        this.$bus.$on('getMenu',function(){
-            console.log('走2')
-            vm.handleSetSideItem();  
-        });
+        // this.$bus.$on('getMenu',function(){
+        //     vm.handleSetSideItem();  
+        // });
     },
     // async created() {
     //     await this.detailWithMenuList();

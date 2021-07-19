@@ -86,11 +86,7 @@ export default {
             const vm = this;
             let params = {
                 attributeConfigVos: tableParams,
-                // tableEnName: this.$appConst.tableEnNameAsset,
-                // tableConfigId: 1
                 tableConfigId: this.$appConst.tableConfigId
-                // tableName: '发票',
-                // tableConfigId: 10
             }
             const loading = this.$loading({
                 lock: true,

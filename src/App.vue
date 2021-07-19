@@ -110,7 +110,6 @@ export default {
                   this.roleType = ["SUPPLIER","CORE_ENT","THIRD_PARTY_ENTERPRISE"];
                   console.log(this.roleType, 'this.roleType')
                   sessionStorage.setItem("authorizationRoleType", JSON.stringify(this.roleType));
-                  console.log('走了没')
                   this.$bus.$emit('getMenu');
                 },
                 handleUserOrgRoles(userRolesArr) {

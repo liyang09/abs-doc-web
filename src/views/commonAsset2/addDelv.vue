@@ -166,7 +166,6 @@ import mixin from '@/assets/js/mixin';
 // import uploadFileComponent from '@/components/uploadFileComponent';
 import dialogCommonComponent from '@/components/dialogCommonComponent';
 import detailEntry from '@/components/detailEntry2';
-import commonSetData from '@/assets/js/commonSetData.js';
 import showFileDetail from '@/components/showFileDetail.vue'
 import inspectionDetail  from './inspectionDetail.vue';
 import docLog from './docLog.vue';

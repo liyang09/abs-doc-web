@@ -8,7 +8,7 @@
                 class="primaryButton2"
                 :disabled="!assetsUidList.length"
                 @click="batchSubmit">
-              提交审核2
+              提交审核
           </el-button>
           <el-button style="margin-bottom:10px;"
                 type="primary"
@@ -18,16 +18,7 @@
                 @click="handleAddAsset()">
               添加
           </el-button>
-          <el-button style="margin-bottom:10px;"
-                type="primary"
-                class="addButton"
-                icon="el-icon-share"
-                @click="download()">
-              导出
-          </el-button>
-          <selectForm ref="selectForm" :invoiceCheckStatusList='invoiceCheckStatusList' :invoiceTypesList="invoiceTypesList" :type='assetTypeList' :invoiceStatusList='invoiceStatusList' @search="reSearch" class="selectForm"></selectForm>
-          <div v-if="assetType === 'TRADESETTLEMENT'" class="allTotalClass">结算单总金额:<span style="margin-left:10px;margin-right:6px;">{{totalAmount | MoneyFormat}}</span>元</div>
-          <div v-if="assetType === 'TRADEPONDERATION'" class="allTotalClass">总净重:<span style="margin-left:10px;margin-right:6px;">{{totalAmount | MoneyFormat}}</span></div>
+          <selectForm ref="selectForm" :invoiceCheckStatusList='invoiceCheckStatusList' :invoiceTypesList="invoiceTypesList" :type='assetTypeList' :invoiceStatusList='invoiceStatusList' @search="reSearch" class="selectForm2"></selectForm>
           <div  class="asset-list borderRadiu12">
             <div>
             <Table
@@ -203,7 +194,6 @@ import selectForm from '@/components/selectForm.vue';
 import breadcrumb from '@/components/breadcrumb.vue';
 import showFileDetail from '@/components/showFileDetail.vue';
 import commonSetData from '@/assets/js/commonSetData.js';
-import allList from '@/assets/js/test/allList.js';
 import{mapState,mapMutations} from 'vuex';
 import selectBusinessType from '@/components/selectBusinessType';
 import assetViewDialog from '@/components/assetViewDialog'
@@ -238,7 +228,6 @@ export default {
       formItem:{},//添加表单字段
       editIsDisabled:{},//编辑时字段是否为可编辑的对象
       copyEditIsDisabled:{},//复制的编辑时字段是否为可编辑的对象
-      totalAmount:0,
       drawer:false,
       breadcrumbs: [],
       queryTerms:{},
@@ -309,7 +298,6 @@ export default {
       // selectedAssetsList为选中的行的所有数据。
       vm.assetsUidList = value1;
       vm.selectedAssetsList = value2;
-      console.log(vm.assetsUidList, '88888', vm.selectedAssetsList)
       vm.entityUuids = [];
       vm.selectedAssetsList.forEach(item => {
         vm.entityUuids.push(item.entityUuid);
@@ -334,9 +322,7 @@ export default {
       //   }
       // })
       const vm = this;
-      console.log(row, '每一条数据')
       this.folderOption.assetInfo = row
-      console.log(this.folderOption, 'this.folderOption11');
       // this.$store.commit('ADD_DIRECTORIESTOASSET', { id: row.id, assetInfo: row })
       this.$nextTick(() => {
         vm.$refs.folderTree.init()
@@ -369,23 +355,6 @@ export default {
         this.$message.info('请勾选可提交审核的资产')
       }
     },
-    // 导出获取数据
-    download(){
-        axios({
-          method: 'post',
-          url:`${this.$apiUrl.exportDataToExcel}/${this.assetType}`,
-          data:{
-            "entityType": this.assetType
-          },
-          responseType: 'arraybuffer'
-        })
-        .then(res => {
-            // res.data 是一个 blob 流格式
-            const blob = new Blob([res.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
-            this.$global.downFile(blob,"资产.xlsx");
-          })
-          .catch(err =>{})
-      },
     // 获取字典值
     getDictionary(assetType) {
       this.assetTypeList = {};
@@ -556,9 +525,7 @@ export default {
             // } else {
             //   datas = [];
             // }
-            console.log(res, 'res')
             datas = res.data.data.udf ? JSON.parse(res.data.data.udf) : [];
-            console.log(res.data.data.udf, 'datas111111')
             vm.SET_DATALIST({value1:datas,value2:assetType});
           }
         }).catch(err => {
@@ -724,7 +691,6 @@ export default {
         for(var key in disabledArray){
           disabledArray[key] = true;
         }
-        console.log(this.copyEditIsDisabled, disabledArray, '000000000', this.formItem)
         // 添加时字段都是可以编辑的。
         this.$refs.addDelv.setDisabled(disabledArray);
         this.$refs.addDelv.init(this.assetType,this.businessTypeVal,true,this.formItem, this.necessaryItem);
@@ -870,7 +836,6 @@ export default {
           if (res.data.status !== 200) return;
           this.totalCount = res.data.data.totalElements;
           let content = res.data.data.content;
-          console.log('666666666')
           //遍历对象属性key 属性值obj[key]
           for( let key in vm.mainTable.tableHeader ){
             if(key === 'properties' || vm.ifTableHeaderProperties) {
@@ -894,9 +859,7 @@ export default {
           this.mainTable.tableData = content;
           vm.ifTableHeaderProperties = false;
           this.$refs.tableRef.doLayout();
-          console.log('8888888', vm.$appConst.tableEnNameAsset)
           if(vm.assetType === vm.$appConst.tableEnNameAsset) {
-            console.log(this.mainTable.tableData[0], 'this.mainTable.tableData[0]')
             vm.rowClick(this.mainTable.tableData[0])
           }
           this.loading = false;

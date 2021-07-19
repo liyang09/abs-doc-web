@@ -48,15 +48,6 @@ const routes = [
         },
         component: resolve => require(['../views/setting/index.vue'], resolve)
       },
-      // {
-      //   path: '/projectManage',
-      //   name: 'projectManage',
-      //   meta: {
-      //       title: '项目',
-      //       icon: 'el-icon-s-order'
-      //   },
-      //   component: resolve => require(['../views/projectManage/index.vue'], resolve)
-      // },
       {
         path: '/wareHouseInformation',
         name: 'wareHouseInformation',

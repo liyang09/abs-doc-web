@@ -90,7 +90,6 @@
         },
         computed: {
             canDownLoad () {
-                console.log(this.$route.name, 'this.$route.name', this.$route)
                 return (this.$route.path === '/commonAsset2/com.evisible.entity.base.common.entity.AssetEntity' || this.$route.name === 'projectManagement')
             }
         },

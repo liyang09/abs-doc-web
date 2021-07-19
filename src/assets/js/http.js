@@ -12,8 +12,6 @@ axios.defaults.timeout = 500000
 axios.interceptors.request.use(
     config => {
         config.headers = {
-            // 'projectName': "proj1st",
-            // 'projectName': "<abs:shimao:proj1st>",
             'projectName': appConst.setProjectName,
             'tenantname': "proj1st",
             'Authorization': sessionStorage.getItem('access_token'),

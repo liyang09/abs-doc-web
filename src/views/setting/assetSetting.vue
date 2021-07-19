@@ -302,15 +302,8 @@ export default {
     },
     handleTableValidate () {
         let n = 0
-        console.log(this.mainTable.tableData, '888888888888')
-        this.mainTable.tableData = [];
-        this.mainTable.tableData.map((v, index) => {
-            console.log(v, '996666666', v.fieldCnName.length, v.fieldCnName)
-            // if(!v.fieldCnName.length) {
-            //   this.$message.error('请录入字段名称1！')
-            //   alert(n)
-            //   return n;
-            // }
+        console.log(this.ruleForm.tabData, '888888888888')
+        this.ruleForm.tabData.map((v, index) => {
             if(!v.fieldEnName.length) {
               v['editChange'] = true
               n++
@@ -326,7 +319,7 @@ export default {
         if (n) {
             this.$message.error('请录入字段名称！')
             this.$nextTick(() => {
-                let leng = this.mainTable.tableData.length - 1
+                let leng = this.ruleForm.tabData.length - 1
                 $('#assetTable .el-table__body .el-table__row').eq(leng).find('.tableInnerInput .el-input__inner').eq(0).trigger('focus')
             })
         }
@@ -334,16 +327,12 @@ export default {
         return n
     },
     handleSetInputDisabled (index) {
-      console.log(index, 'index')
-      this.ruleForm.tabData = [];
-        this.mainTable.tableData.map(v => {
+      console.log(index, 'index', this.ruleForm.tabData)
+        this.ruleForm.tabData.map(v => {
             v['editChange'] = false
-            this.ruleForm.tabData.push(v)
         })
-        // this.mainTable.tableData[index]['editChange'] = !this.mainTable.tableData[index]['editChange']
-        this.mainTable.tableData[index]['editChange'] = true;
+        // this.ruleForm.tabData[index]['editChange'] = !this.ruleForm.tabData[index]['editChange']
         this.ruleForm.tabData[index]['editChange'] = true;
-        console.log(this.mainTable.tableData, 'this.mainTable.tableData')
         this.$nextTick(() => {
             // $('.el-table__body').find('.el-table__row').eq(index).find('.el-input .el-input__inner').eq(0).focus()
             $('#assetTable .el-table__body .el-table__row').eq(index).find('.el-input .el-input__inner').eq(0).focus()
@@ -733,8 +722,6 @@ export default {
     search() {
       var vm = this;
       const params = {
-        // tableEnName: 'TRADEINVOICE',
-        // projectName: 'TLYYTrade'
         tableEnName: this.$appConst.tableEnNameAsset,
         projectName: this.$appConst.setProjectName
       }
@@ -744,20 +731,6 @@ export default {
         spinner: 'el-icon-loading',
         background: 'rgba(0, 0, 0, 0.7)'
       });
-      // var content = [
-      //   {
-      //     fieldCnName: '字段名称',
-      //     fieldType: 'STRING',
-      //     ifSort: false,
-      //     ifQuery: true,
-      //     ifEdit: false,
-      //     portalTypeVisible: "FACTOR,BROKER",
-      //     portals: ["FACTOR"],
-      //   }
-      // ]
-      // this.mainTable.tableData = content;
-      // this.tabData = content;
-      // return;
       this.$http.get(`${this.$apiUrl.tableAssetName}`, { params })
       // this.$http.get(`${this.$apiUrl.tablefile}`, { params })
         .then(res => {
@@ -778,9 +751,7 @@ export default {
           //   //   item['portals'] = [];
           //   }
           // })
-          this.mainTable.tableData = content;
           this.ruleForm.tabData = content;
-          console.log(content, '9999999999999999')
           loading.close()
         }).catch(err => {
           loading.close()
@@ -884,7 +855,7 @@ export default {
               })
             }
           }
-          this.mainTable.tableData = content;
+          this.ruleForm.tabData = content;
           vm.ifTableHeaderProperties = false;
           this.$refs.tableRef.doLayout();
           if(vm.assetType === '') {
