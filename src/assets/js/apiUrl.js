@@ -80,4 +80,21 @@ export let apiUrl = {
     docAdd:currentApiUrl + '/config/attribute-config/edit',//设置文档里面的保存
     tablefile:currentApiUrl + '/asset/attribute-config/table/file',//文档查询
     auditSubmit:currentApiUrl + '/asset/audit',//提交审核
+    //项目管理（合作公司）接口
+    projectUrl:currentApiUrl + '/project/query', // 项目管理查询
+    editUrl:currentApiUrl + '/project/edit', // 编辑
+    deleatUrl:currentApiUrl + '/project/delete', // 删除
+    createdUrl:currentApiUrl + '/project/created', // 创建
+    releaseUrl:currentApiUrl + '/project/release', // 发布
+    edocUrl: bizUrl, //合作公司查询
+    crediturl: crediturl, //企业查询
+    zhongdeng:zhongdeng, // 重登
+    zhongdengUploadUrl:zhongdengUploadUrl,
+    applyUrl:currentApiUrl+ '/project/audit/application', // 项目管理审批
+    requestUrl:currentApiUrl+ '/project/queryRequestApprovalPending', // 项目管理申请审批
+    queryProject:currentApiUrl+'/project/queryProject', // 项目申请
+    projectRequest:currentApiUrl+'/project/projectRequest',
+    factoringAddOrg:currentApiUrl+'/project/factoringAddOrg', //新增项目合作公司
+    absCommonApiUrl:apiGateway + '/abs-common',
+    queryCompany:currentApiUrl+'/asset/query'
 }

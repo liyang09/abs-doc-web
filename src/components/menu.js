@@ -4,7 +4,19 @@ export default [
         "index": "/readme",
         "title": "首页",
         "subs": []
-    }, 
+    },
+    {
+        "icon": "el-icon-setting",
+        "index": "/project",
+        "title": "项目管理",
+        "subs": []
+    },
+    {
+        "icon": "el-icon-s-management",
+        "index": "/company",
+        "title": "合作公司",
+        "subs": []
+    },
     {
         "icon": "el-icon-search",
         "index": "21",
