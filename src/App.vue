@@ -85,6 +85,7 @@ export default {
                         let rolesArr = [];
                         let user = response.data.data.user;
                         sessionStorage.setItem('user',JSON.stringify(user));
+                        sessionStorage.setItem('authorities', JSON.stringify(response.data.data.authorities))
                         let userRolesArr = response.data.data.user.roles;
                         vm.handleUserOrgRoles(userRolesArr);
                         rolesArr = vm.handleRemoveDoubleArr(rolesArr);

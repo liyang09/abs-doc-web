@@ -172,6 +172,17 @@ export default{
         THIRD_PARTY_ENTERPRISE: "第三方企业",
         CORE_ENT: "核心企业"
     },
+    //项目状态
+    "projecType": {
+      DRAFT: "草稿",
+      RELEASE: "发布"
+    },
+    //企业项目申请状态
+    "requestStatus":{
+      REQUEST: "申请",
+      CONFIRM: "通过",
+      REJECT: "拒绝"
+    },
     "dataType": {
         TRADECONTRACT: "合同",
         TRADEORDER: "订单",

@@ -49,6 +49,16 @@ const routes = [
         component: resolve => require(['../views/setting/index.vue'], resolve)
       },
       {
+        path: '/project',
+        component: resolve =>
+          require(['../views/project/index.vue'], resolve)
+      },
+      {
+        path: '/company',
+        component: resolve =>
+          require(['../views/company/index.vue'], resolve)
+      },
+      {
         path: '/wareHouseInformation',
         name: 'wareHouseInformation',
         meta: {

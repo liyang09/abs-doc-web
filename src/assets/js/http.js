@@ -12,7 +12,8 @@ axios.defaults.timeout = 500000
 axios.interceptors.request.use(
     config => {
         config.headers = {
-            'projectName': appConst.setProjectName,
+            // 'projectName': appConst.setProjectName,
+            'projectName': sessionStorage.getItem("projectName"),
             'tenantname': "proj1st",
             'Authorization': sessionStorage.getItem('access_token'),
             'org_id': sessionStorage.getItem('orgId'),
