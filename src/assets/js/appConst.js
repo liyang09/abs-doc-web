@@ -1,14 +1,10 @@
 /* eslint-disable */
 export default{
-    // auditTypeSet: 'com.evisible.entity.base.common.entity.AuditEntity',
-    // auditTypeSet: '<abs:shimao:proj1st>com.evisible.entity.base.common.entity.AuditEntity',
-    auditTypeSet: '<abs:shimao:proj1st>com.evisible.entity.base.common.entity.AssetEntity',
-    assetTypeSet: 'com.evisible.entity.base.common.entity.AssetEntity',
+    auditTypeSet: `${sessionStorage.getItem("projectConfigEnName")}Audit`,
     tableConfigId: 1,
-    setProjectName: '<abs:shimao:proj1st>',
-    setProjectName2: '<abs:shimao:proj2nd>',
-    tableEnNameCompany: '<abs:shimao:proj1st>com.evisible.entity.base.common.entity.CompanyEntity',
-    tableEnNameAsset: '<abs:shimao:proj1st>com.evisible.entity.base.common.entity.AssetEntity',
+    setProjectName: sessionStorage.getItem("projectConfigEnName"),
+    tableEnNameCompany: `${sessionStorage.getItem("projectConfigEnName")}CompanyEntity`,
+    tableEnNameAsset: `${sessionStorage.getItem("projectConfigEnName")}AssetEntity`,
     uosUrl: uosUrl,
     edocUrl: bizUrl,
     bucketName: bucketName,
@@ -97,7 +93,6 @@ export default{
       }
     },
     handleSetTime (time) {
-      // console.log(time, 'time', typeof(time));
         if (time && (time.indexOf(' ') > -1)) {
           return time.split(' ')[0]
         } else if (time && (time.indexOf('T') > -1)) {

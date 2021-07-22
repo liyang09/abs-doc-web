@@ -13,8 +13,8 @@ axios.interceptors.request.use(
     config => {
         config.headers = {
             // 'projectName': appConst.setProjectName,
-            'projectName': sessionStorage.getItem("projectName"),
-            'tenantname': "proj1st",
+            'projectName': sessionStorage.getItem("projectConfigEnName"),
+            // 'tenantname': "proj1st",
             'Authorization': sessionStorage.getItem('access_token'),
             'org_id': sessionStorage.getItem('orgId'),
             'org_name': encodeURI(sessionStorage.getItem('orgName')),

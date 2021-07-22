@@ -16,6 +16,7 @@
         name: 'docComponent',
         data () {
             return {
+                tableConfigId: '',
                 fieldEnNameStart: '',
                 treeData: [],
                 defaultTreeData: []
@@ -56,7 +57,11 @@
                         let arr = [];
                         let defaultValue = {};
                         if(res.data.data && res.data.data.length) {
+                            this.tableConfigId = res.data.data[0].tableConfigId;
                             defaultValue = res.data.data[0].defaultValue ? res.data.data[0].defaultValue : {};
+                            if(Object.keys(defaultValue).length === 0) {
+                                defaultValue["directories"] = [];
+                            }
                             arr = defaultValue.directories;
                             this.fieldEnNameStart = res.data.data[0].fieldEnName ? res.data.data[0].fieldEnName: '';
                         } else {
@@ -64,40 +69,12 @@
                         }
                         this.handleSetTreeData(arr)
                         this.treeData = arr
-                        console.log(this.treeData, 'this.treeData')
                         this.defaultTreeData = JSON.parse(JSON.stringify(arr))
                     }
                     loading.close();
                 }).catch(err => {
                     loading.close();
                     this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
-                });
-            },
-            searchProject() {
-              var vm = this;
-              const params = {
-                projectName: 'company'
-              }
-              const loading = this.$loading({
-                lock: true,
-                text: 'Loading',
-                spinner: 'el-icon-loading',
-                background: 'rgba(0, 0, 0, 0.7)'
-              });
-
-              this.$http.get(`${this.$apiUrl.tableAssetName}`, { params })
-                .then(res => {
-                  if (res.data.status !== 200) return;
-                  this.totalCount = res.data.data.totalElements;
-                  let content = res.data.data;
-
-                  this.mainTable.tableData = content;
-                  this.tabData = content;
-                  loading.close()
-                }).catch(err => {
-                  loading.close()
-                  this.totalCount = 0;
-                  this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
                 });
             },
             handleSetTreeData (arr, subId, attrId) {
@@ -129,8 +106,12 @@
                 // })
             },
             handleSaveConfig (tableParams ) {
-               if(!this.fieldEnNameStart) {
+                if(!this.fieldEnNameStart) {
                     this.$message.warning('无初始名，请联系后端配置！')
+                    return;
+                }
+                if(this.$refs.treeComponent.treeData.length === 0) {
+                    this.$message.warning('请添加文件！')
                     return;
                 }
                 let arr = JSON.parse(JSON.stringify(tableParams));
@@ -144,8 +125,12 @@
                 })
                 let params = {
                     attributeConfigVos: arr,
-                    tableName: this.$appConst.setProjectName,
+                    tableName: this.$appConst.tableEnNameAsset,
                     tableConfigId: this.$appConst.tableConfigId
+                }
+                if(this.type === "projectSetting") {
+                    params.tableName = this.$appConst.tableEnNameCompany;
+                    params.tableConfigId = this.tableConfigId;
                 }
                 const loading = this.$loading({
                     lock: true,

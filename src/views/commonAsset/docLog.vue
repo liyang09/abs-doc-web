@@ -144,7 +144,6 @@ export default {
       },
       setAttachments(fileList){
           this.fujianShow = true;
-          console.log('111');
           console.log(fileList,'FILELIST');
           this.attachmentss = fileList;
       },

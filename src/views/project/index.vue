@@ -241,11 +241,10 @@ export default {
       },
       // 查看
       examine(row) {
-        // console.log(row)
-        // sessionStorage.setItem('menuStatus','company')
-        sessionStorage.setItem('projectName',row.projectConfigEnName)
-        sessionStorage.setItem('rowList',JSON.stringify(row))
-        this.$router.push({path:'/company'});
+        sessionStorage.setItem('isShowNewMenu', JSON.stringify(true));
+        sessionStorage.setItem('projectConfigEnName', row.projectConfigEnName);
+        sessionStorage.setItem('rowProjectObj', JSON.stringify(row));
+        window.location.reload();
       },
       // 搜索
       search() {

@@ -637,9 +637,7 @@ export default {
         // 从接口获取列表展示字段
         // await vm.$http.get(`${this.$apiUrl.tableConfigName}?tableName=${assetType}`)
         let url = url = `${this.$apiUrl.tableConfigName2}?typeName=${this.assetType}`;
-        console.log(vm.assetType, '9999999')
         if(vm.assetType === vm.$appConst.tableEnNameAsset) {
-          console.log('7778899000')
           url = `${this.$apiUrl.tableConfigName3}/${this.assetType}`;
         }
         await vm.$http.get(url)

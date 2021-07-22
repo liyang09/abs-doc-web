@@ -23,4 +23,7 @@ const projectAddress = [{
    }]
 const systemSelectShow = false;//下拉框系统切换显示就true，隐藏就false;
 const bucketName = 'file.uos-test' // file.uos-test     file.ev-uos-default
+const crediturl = apiGateway + '/evisible-credit'
+const zhongdeng = apiGateway + '/zhongdeng'
+const zhongdengUploadUrl = apiGateway + '/files'
 

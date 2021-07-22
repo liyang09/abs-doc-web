@@ -97,7 +97,7 @@ export default {
       searchTableInfo: '',
       loading:false,
       dataList:{},
-      rowList:{},
+      rowProjectObj:{},
       folderOption: {
         assetInfo: {},
         type: 'asset',
@@ -135,8 +135,7 @@ export default {
   },
   created() {
     this.id = sessionStorage.getItem("projectEntityUuid");
-    this.rowList = JSON.parse(sessionStorage.getItem("rowList"));
-    console.log(this.rowList)
+    this.rowProjectObj = JSON.parse(sessionStorage.getItem("rowProjectObj"));
     this.query();
   },
   mounted() {
@@ -147,7 +146,7 @@ export default {
     add(){
       this.$nextTick(() =>{
         this.title = '新增项目公司'
-        this.$refs.addOrEditProject.show(this.rowList)
+        this.$refs.addOrEditProject.show(this.rowProjectObj)
       });
     },
     // 修改
@@ -214,7 +213,7 @@ export default {
       const params = {
         "page":this.page-1,
         "size":this.pageSize,
-        "condition":{"entityType":`${this.rowList.projectConfigEnName}CompanyEntity`},
+        "condition":{"entityType":`${this.$appConst.tableEnNameCompany}`},
         "sortDirection":"DESC"
       }
       this.loading = true;
@@ -271,7 +270,6 @@ export default {
       this.$http.post(url, params, { headers: { 'Content-Type': 'application/json; charset=utf-8' } })
           .then(res => {
               if (res.data.status === 200) {
-                  console.log(123)
                   this.$refs.information.show()
               } else {
                   this.$message.error('企业信息查询失败，请稍后再试')

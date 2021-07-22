@@ -90,7 +90,13 @@ export default {
                         vm.handleUserOrgRoles(userRolesArr);
                         rolesArr = vm.handleRemoveDoubleArr(rolesArr);
                         vm.handleSetSession(data, rolesArr);
-                        this.$message.success("登录成功");
+                        let isShowNewMenu = JSON.parse(sessionStorage.getItem('isShowNewMenu'));
+                        if(isShowNewMenu) {
+                          this.$router.push({path: '/company'})
+                        } else {
+                          this.$router.push({path: '/readme'})
+                          this.$message.success("登录成功");
+                        }
                         vm.visible = true;
                     } else {
                         vm.$message.error("登录失败");

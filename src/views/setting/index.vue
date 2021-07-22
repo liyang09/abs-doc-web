@@ -68,9 +68,7 @@ export default {
             }
         },
         saveSetting(){
-            // this.$router.push({path: '/readme2'})
             var tableParams = this.$refs.setAsset.handleGetColumns();
-            console.log(tableParams, 'tableParams')
             if(this.type === 'assetSet') {
                 var isPass = this.$refs.setAsset.saveSubmit();
                 if(!isPass) {
@@ -109,10 +107,8 @@ export default {
             var vm = this;
             this.$nextTick(() => {
                 if(vm.type === 'docSetting') {
-                    console.log('2222')
                     vm.$refs.docSetting.handleSaveConfig(tableParams);
                 } else {
-                    console.log('333')
                     vm.$refs.docSettingProject.handleSaveConfig(tableParams);
                 }
             })

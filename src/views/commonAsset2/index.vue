@@ -277,7 +277,6 @@ export default {
     // var assetType = this.$route.params.assetType;
     // this.getDictionary(assetType);
     this.initExecute(this.$appConst.tableEnNameAsset);
-    // this.initExecute(this.$appConst.assetTypeSet);
     // this.roleType = JSON.parse(sessionStorage.getItem("authorizationRoleType"));
   },
   computed: {

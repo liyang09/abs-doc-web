@@ -1048,7 +1048,7 @@
         .export-asset{
             font-size: 29px;
             position: absolute;
-            right: 75px;
+            right: 47px;
             top: -8px;
             cursor: pointer;
             color: #666;

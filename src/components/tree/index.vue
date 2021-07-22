@@ -50,7 +50,7 @@
         },
         watch: {
             treeData () {
-                console.log(this.treeData, '87777666666')
+                console.log(this.treeData, 'treeData')
                 if (this.treeData) {
                     this.$set(this.subArr, 0, this.treeData)
                     this.$set(this.attrArr, 0, [])

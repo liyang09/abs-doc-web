@@ -288,7 +288,6 @@ export default {
           }
         }
       }
-      console.log(vm.assetsUidList,'vm.assetsUidList');
       vm.$bus.$emit('getAssetsUidList',vm.assetsUidList,list);
     },
     setCurrentPage(page) {

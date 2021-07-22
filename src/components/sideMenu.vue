@@ -56,6 +56,7 @@
 /* eslint-disable no-prototype-builtins */
 
 import menuList from './menu.js'
+import menuList2 from './menu2.js'
 import {mapMutations} from 'vuex'
   export default {
     name: 'sideBar',
@@ -63,6 +64,7 @@ import {mapMutations} from 'vuex'
         return {
             isCollapse:false,
             menuList:[],
+            menuList2:[],
             openeds: [],
             roleType: [], // 当前企业 角色  核心企业  供应商  第三方
             orgId: sessionStorage.getItem("orgId"),
@@ -150,7 +152,13 @@ import {mapMutations} from 'vuex'
         },
         // 匹配菜单
         handleSetSideItem() {
-            this.menuList = JSON.parse(JSON.stringify(menuList));
+            let isShowNewMenu = JSON.parse(sessionStorage.getItem('isShowNewMenu'));
+            if(isShowNewMenu) {
+                this.menuList = JSON.parse(JSON.stringify(menuList2));
+            } else {
+                this.menuList = JSON.parse(JSON.stringify(menuList));
+            }
+            sessionStorage.setItem('isShowNewMenu',JSON.stringify(false))
             let roleType = JSON.parse(sessionStorage.getItem("authorizationRoleType")); // 核心企业  供应商  第三方
             let nowBusinessScenarios = this.$appConst.nowBusinessScenarios; // 当前用户简称
             let userRolesIsManager = sessionStorage.getItem("userRolesIsManager"); // 当前用户 是否是 企业管理员

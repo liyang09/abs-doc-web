@@ -44,21 +44,21 @@
         },
         methods: {
             async init(subMenuList) {
-                var vm = this;
-                if(this.currentShow){
-                    var response = await this.$http.post(`${this.$apiUrl.getStatistic}/false`,subMenuList);
-                    if (response.data.status == this.$appConst.status){
-                        var result = response.data.data;
-                        vm.content = result;
-                    }
-                    return;
-                }else{
-                    var response2 = await this.$http.post(`${this.$apiUrl.getStatistic}/true`,subMenuList);
-                    if (response2.data.status == this.$appConst.status){
-                        var result2 = response2.data.data;  
-                        vm.content2 = result2;
-                    }
-                }
+                // var vm = this;
+                // if(this.currentShow){
+                //     var response = await this.$http.post(`${this.$apiUrl.getStatistic}/false`,subMenuList);
+                //     if (response.data.status == this.$appConst.status){
+                //         var result = response.data.data;
+                //         vm.content = result;
+                //     }
+                //     return;
+                // }else{
+                //     var response2 = await this.$http.post(`${this.$apiUrl.getStatistic}/true`,subMenuList);
+                //     if (response2.data.status == this.$appConst.status){
+                //         var result2 = response2.data.data;  
+                //         vm.content2 = result2;
+                //     }
+                // }
             },
             currentClick() {
                 this.currentShow = !this.currentShow;
@@ -68,7 +68,6 @@
         mounted() {
             var vm = this;
             vm.currentShow = true;
-            console.log(sessionStorage.getItem('subMenuList'), 'sessionStorage.getItem(subMenuList)')
             if(sessionStorage.getItem('subMenuList')){
                 this.init(JSON.parse(sessionStorage.getItem('subMenuList')));
             }
