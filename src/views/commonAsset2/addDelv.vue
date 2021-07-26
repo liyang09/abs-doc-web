@@ -11,7 +11,7 @@
                 <div>
                     <el-col :span="24" class="elCol" v-for="(value,key) in formItem" :key="key">
                         <el-col :span="20">
-                            <el-form-item :label="value + ':'" :prop="key" v-if="key.indexOf('Date')!=-1 || key=='kprq'">
+                            <el-form-item :label="value + ':'" :prop="key" v-if="key.indexOf('Date')!=-1 || key=='kprq' || dateList.includes(key)">
                                 <el-date-picker style="width:100%;" value-format="yyyy-MM-dd" class="elPiker expTime"
                                                 v-model="form[key]" type="date"  :disabled="!editIsDisabled[key]"
                                                 @change="handelValidEndDate"
@@ -82,7 +82,7 @@
                                 </el-select>
                             </el-form-item>
                             <!-- 是否已融资 -->
-                            <el-form-item :label="value+ ':'" :prop="key" v-else-if="key==='financed'" >
+                            <el-form-item :label="value+ ':'" :prop="key" v-else-if="key==='financed'|| booleanList.includes(key)" >
                                 <el-select class="elSelect" style="width:100%;"
                                         v-model="form[key]" placeholder="请选择" :disabled="!editIsDisabled[key]">
                                     <!-- <el-option
@@ -91,8 +91,8 @@
                                         :label="item"
                                         :value="keyValue">
                                     </el-option> -->
-                                    <el-option :key="true" label="已融资" :value="true"></el-option>
-                                    <el-option :key="false" label="未融资" :value="false"></el-option>
+                                    <el-option :key="true" label="是" :value="true"></el-option>
+                                    <el-option :key="false" label="否" :value="false"></el-option>
                                 </el-select>
                             </el-form-item>
                             <!-- 发票类型 -->
@@ -175,6 +175,9 @@ import Vue from 'vue';
         props:['directoriesList', 'copyFormItem', 'isRoot', 'type', 'receiveTypeList', 'deliveryTypeList', 'invoiceStatusList', 'invoiceCheckStatusList','invoiceTypesList','financeStatusList'],
         data () {
             return {
+                booleanList: [],
+                dateList: [],
+                integerList: [],
                 inspectionShow:false,
                 tagShow:false,
                 goodsKey: '', // 记录明细录入的字段key值
@@ -310,8 +313,12 @@ import Vue from 'vue';
             setDisabled(editIsDisabled){
                 this.editIsDisabled = editIsDisabled;
             },
-            init(assetType,businessTypeVal,isAdd,formItem,necessaryItem) {
+            init(assetType,businessTypeVal,isAdd,formItem,necessaryItem,booleanList, dateList, integerList) {
                 var vm = this;
+                console.log(booleanList, 'booleanList2222')
+                vm.booleanList = booleanList ? booleanList : [];
+                vm.dateList = dateList ? dateList : [];
+                vm.integerList = integerList ? integerList : [];
                 vm.tagShow = false;
                 vm.inspectionShow = false;
                 vm.isAdd = isAdd;
@@ -557,7 +564,6 @@ import Vue from 'vue';
                         this.$message.error("您有必填项未填或填写有误！")
                     }else{
                         if(!vm.handelValidEndDate()) return;
-                        vm.sureLoading = true;
                         if(vm.isAdd){
                             // if(vm.isRoot){
                             //     // 如果是根节点，则需要调用资产入图的接口。
@@ -581,21 +587,22 @@ import Vue from 'vue';
                             // }
 
                             params.assetType = this.assetType;
+                            params.companyEntityUuid = this.businessTypeVal;
                             for(var key in params){
                                 if(params[key] == '' && params[key] !== false){
                                     delete params[key];
                                 }
-                                if(key === 'jine' || key === 'num') {
-                                    params[key] = Number(params[key])
-                                }
-                                if(key === 'ziduan3') {
-                                    params[key] = '2021-07-07'
+                                if(vm.integerList.length && vm.integerList) {
+                                    if(vm.integerList.includes(key)) {
+                                       params[key] = Number(params[key])
+                                    }
                                 }
                             }
                             delete params['@class'];
                             delete params['_id'];
                             params.top = false;
                             console.log(params, 'params')
+                            vm.sureLoading = true;
                             try{
                                 var response = await vm.$http.post(`${vm.$apiUrl.saveAsset2}`,params);
                                 if(response.data.status === vm.$appConst.status) {
@@ -605,8 +612,8 @@ import Vue from 'vue';
                                     vm.sureLoading = false;
                                 }
                             }catch(err){
-                                vm.$message.error(err.data.message);
                                 vm.sureLoading = false;
+                                vm.$message.error(err.data.message);
                             }
                         }else{
                             this.updateAsset();

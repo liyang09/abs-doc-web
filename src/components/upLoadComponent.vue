@@ -1,6 +1,6 @@
 <template>
   <div>
-    <el-upload
+    <!-- <el-upload
       :drag="drag"
       ref="upload"
       class="upload-demo"
@@ -15,7 +15,25 @@
       action='/'
       >
       <el-button size="small" type="primary" class="uploadBtn">
-        <!-- <img style='width: 15px; height: 16px;' :src='$global.imgUrl.plus' /> -->
+        {{uploadTitle}}
+      </el-button>
+    </el-upload> -->
+
+
+    <el-upload
+      :drag="drag"
+      ref="upload"
+      class="upload-demo"
+      name="assetFile"
+      :action='$apiUrl.fileUpload'
+      :headers="uploadHeader"
+      :accept="acceptList"
+      :file-list="fileList"
+      :show-file-list="showFileList"
+      :before-remove="remove"
+      :on-success="uploadFileSuccess"
+      >
+      <el-button size="small" type="primary" class="uploadBtn">
         {{uploadTitle}}
       </el-button>
     </el-upload>
@@ -48,8 +66,11 @@ export default {
     },
     uploadHeader () {
       return {
-        authorization: sessionStorage.getItem('token'),
-        tenantName: sessionStorage.getItem('currentDataSource')
+        // authorization: sessionStorage.getItem('token'),
+        // tenantName: sessionStorage.getItem('currentDataSource')
+        "Authorization": sessionStorage.getItem("access_token"),
+				"client_id": this.$appConst.ClIENT_ID,
+				"org_id": sessionStorage.getItem("orgId"),
       }
     },
     acceptList () {
@@ -100,6 +121,43 @@ export default {
     }
   },
   methods: {
+    // 上传成功
+    uploadFileSuccess(res, file) {
+      console.log(res, 'resfile', file)
+        if (res.status === 10000 || res.status === 200) {
+            let typeId = JSON.parse(sessionStorage.getItem("typeId"));
+            let resData = res.data[0];
+            resData["typeId"] = typeId;
+            this.fileList.push(resData);
+            this.$message.success('上传成功!');
+            this.saveAttachment();
+        } else {
+            this.$message.warning('文件上传失败');
+        }
+    },
+    //保存
+    saveAttachment() {
+      let saveEntityUuid = sessionStorage.getItem('saveEntityUuid')
+      let params = {
+        assetType: this.$appConst.tableEnNameAsset,
+        attachmentList: this.fileList
+      }
+      this.$http.post(`${this.$apiUrl.assetStart}/${saveEntityUuid}/attachment`,params)
+        .then(res => {
+          if (res.data.status !== 200) return;
+          this.$message.success('保存成功!');
+        }).catch(err => {
+            this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
+        });
+    },
+    // 删除前调用钩子
+    remove(file) {
+        const files = file.response ? file.response.data[0] : file;
+        const key = this.fileList.findIndex(val => val.fileId === files.fileId);
+        if (key === -1) return;
+        this.fileList.splice(key, 1);
+        this.$emit('removeAgreement', file);
+    },
     onChange (file, fileList) {
       if (file.status === 'ready') {
         this.$store.commit('ADD_PENDINGFILELIST', file)
@@ -113,34 +171,34 @@ export default {
     triggerUpload () {
       $('.cotextItemUpload .upload-demo .uploadBtn').trigger('click')
     },
-    async handleSubmitUpload (options) {
-      const { maxSize, multiUploadSize, getSize, splitUpload, singleUpload } = this
-      const { file, onProgress, onSuccess, onError } = options
-      let fileSuffixValue = file.name.split('.').pop()
-      if (this.acceptList.indexOf(fileSuffixValue) === -1) {
-        this.$global.errMsg(`只能上传${this.acceptList}文件！`)
-        this.fileList = this.fileArr
-        return false
-      }
-      if (file.size > maxSize) {
-        return this.$message({
-          message: `您选择的文件大于${getSize(maxSize)}`,
-          type: 'error'
-        })
-        return false
-      }
-      this.$emit('beforeUpload', file)
-      // 根据文件大小选择直接上传或分块上传
-      if (file.size > multiUploadSize) {
-        let uploadResult = await splitUpload(file, onProgress)
-        this.$message({
-          message: '上传成功',
-          type: 'success'
-        })
-      } else {
-        singleUpload(file, onProgress)
-      }
-    },
+    // async handleSubmitUpload (options) {
+    //   const { maxSize, multiUploadSize, getSize, splitUpload, singleUpload } = this
+    //   const { file, onProgress, onSuccess, onError } = options
+    //   let fileSuffixValue = file.name.split('.').pop()
+    //   if (this.acceptList.indexOf(fileSuffixValue) === -1) {
+    //     this.$global.errMsg(`只能上传${this.acceptList}文件！`)
+    //     this.fileList = this.fileArr
+    //     return false
+    //   }
+    //   if (file.size > maxSize) {
+    //     return this.$message({
+    //       message: `您选择的文件大于${getSize(maxSize)}`,
+    //       type: 'error'
+    //     })
+    //     return false
+    //   }
+    //   this.$emit('beforeUpload', file)
+    //   // 根据文件大小选择直接上传或分块上传
+    //   if (file.size > multiUploadSize) {
+    //     let uploadResult = await splitUpload(file, onProgress)
+    //     this.$message({
+    //       message: '上传成功',
+    //       type: 'success'
+    //     })
+    //   } else {
+    //     singleUpload(file, onProgress)
+    //   }
+    // },
     handleSuccess (file, fileItem, objectKey) {
       this.changeUploadStatus(objectKey)
       this.$store.commit('REDUCE_PENDINGFILELIST', file)
@@ -332,7 +390,6 @@ export default {
           'size': file.size
         }
       }
-      console.log(this.assetInfo, 'this.assetInfo')
       let signature = await this.$http.post(`${this.uosUrl}/api/obs/signature/upload`, params
       ).then(res => res.data.data)
 

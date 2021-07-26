@@ -111,7 +111,7 @@
         </template>
         <div class="top-right-corner-upload">
             <el-tooltip effect="dark" content="导出资产" placement="top-end" v-if="ifIconsShow()">
-                <span class="iconfont icondownload1 export-asset" @click="exportAsset"></span>
+                <!-- <span class="iconfont icondownload1 export-asset" @click="exportAssetHandle"><i class="el-icon-download"></i></span> -->
             </el-tooltip>
             <el-popover
                 popper-class="folder-popover"
@@ -846,8 +846,8 @@
                 aLink.href = URL.createObjectURL(blob)
                 aLink.click()
             },
-            exportAsset () {
-                this.$parent.exportAsset()
+            exportAssetHandle () {
+                this.$emit('exportAssetHandle')
             },
             mouseUp () {
               cursorResize.doUp()

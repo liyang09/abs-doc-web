@@ -197,8 +197,10 @@ export default {
   created() {
     this.mainTable.tableHeader = commonSetData.tableHeader.setting;
     this.search();
+    this.getDictionaryApi();
   },
   computed: {
+    // ...mapState(['ASSETSPARAMS', 'DICTIONARY']),
     height() {
       var height2 = window.innerHeight || document.documentElement.clientHeight || document.body.clientHeight;
       return height2 - 300 + 'px';
@@ -206,9 +208,9 @@ export default {
   },
 
 
-  mounted() {
-  },
+  mounted() {},
   methods: {
+    // ...mapMutations(['SET_DATALIST', 'SET_DICTIONARY']),
     handleEditChange(index) {
       // this.handleSetInputDisabled(index)
       if (!this.handleTableValidate()) {
@@ -355,6 +357,19 @@ export default {
         }).catch(err => {
           loading.close()
           this.totalCount = 0;
+          this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
+        });
+    },
+    // 字典请求数据
+    getDictionaryApi(list, val) {
+      this.$http.get(this.$apiUrl.dictionary.codeList + '?code=CLASS_TYPE')
+        .then(res => {
+          if (res.data.status !== 200) return;
+          this.typeOptions = [];
+          res.data.data.forEach(item=>{
+            this.typeOptions.push({ value: item.id, label: item.label})
+          })
+        }).catch(err => {
           this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
         });
     },

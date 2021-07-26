@@ -18,6 +18,13 @@
                 @click="handleAddAsset()">
               添加
           </el-button>
+          <el-button style="margin-bottom:10px;"
+                type="primary"
+                class="addButton"
+                icon="el-icon-download"
+                @click="download()">
+              导出
+          </el-button>
           <selectForm ref="selectForm" :invoiceCheckStatusList='invoiceCheckStatusList' :invoiceTypesList="invoiceTypesList" :type='assetTypeList' :invoiceStatusList='invoiceStatusList' @search="reSearch" class="selectForm2"></selectForm>
           <div  class="asset-list borderRadiu12">
             <div>
@@ -56,6 +63,7 @@
                           :class="{'notSubmit': hasNoEditable(scope)}"
                           size="medium"
                           type="text"
+                          class="collectBtn redBtn"
                           style="margin-left: 0px;"
                           @click="edit(scope.row)">
                           编辑
@@ -64,6 +72,7 @@
                       <el-button
                           size="medium"
                           type="text"
+                          class="collectBtn redBtn"
                           style="margin-left: 5px;"
                           @click="deleteAsset(scope.row)">
                           删除
@@ -143,8 +152,11 @@
           <!-- 树形文件夹 -->
           <!-- <div class="stretch" @mousedown="stretchMousedown" @mouseup="stretchMouseup"></div> -->
           <div class="asset-attachment borderRadiu12" v-if="mainTable.tableData.length">
-            <folderTree :folderOption="folderOption" ref="folderTree"></folderTree>
+            <folderTree :folderOption="folderOption" ref="folderTree" @exportAssetHandle="exportAssetHandle"></folderTree>
           </div>
+
+          <!-- 导出资产 -->
+          <export-asset ref="exportAsset" :exportContents="exportContents" :exportOption="exportOption"></export-asset>
         </div>
         <!-- 添加 -->
         <el-drawer
@@ -199,11 +211,23 @@ import selectBusinessType from '@/components/selectBusinessType';
 import assetViewDialog from '@/components/assetViewDialog'
 import axios from 'axios'
 import folderTree from '@/components/folderTree.vue'
+import exportAsset from '@/components/exportAsset.vue'
 
 export default {
   name: '',
   data() {
     return {
+      integerType: '', // 字典里面的数字类型
+      integerList: [], // 所有数字类型的字段列表
+      dateType: '',
+      dateList: [],
+      booleanType: '',
+      booleanList: [],
+      exportContents: [],
+      exportContents2: [],
+      exportOption: {
+        fromMenu: 'assetQuery'
+      },
       folderOption: {
         assetInfo: {},
         type: 'asset',
@@ -258,6 +282,7 @@ export default {
     };
   },
   components: {
+    exportAsset,
     folderTree,
     assetViewDialog,
     Table,
@@ -276,6 +301,7 @@ export default {
     // 首次用到该组件的时候执行这个。
     // var assetType = this.$route.params.assetType;
     // this.getDictionary(assetType);
+    this.getDictionaryApi();
     this.initExecute(this.$appConst.tableEnNameAsset);
     // this.roleType = JSON.parse(sessionStorage.getItem("authorizationRoleType"));
   },
@@ -310,6 +336,28 @@ export default {
   },
   methods: {
     ...mapMutations(['SET_DATALIST', 'SET_DICTIONARY']),
+    exportAssetHandle () {
+        this.$refs.exportAsset.exportAssetHandle();
+    },
+    download(){
+      axios({
+        method: 'post',
+        url:`${this.$apiUrl.exportDataToExcel2}/${this.assetType}`,
+        data:{
+          "entityType": this.assetType,
+          "exportRequest": {
+            "fieldNames": this.exportContents2
+          }
+        },
+        responseType: 'arraybuffer'
+      })
+      .then(res => {
+          // res.data 是一个 blob 流格式
+          const blob = new Blob([res.data], { type: 'application/vnd.openxmlformats-officedocument.spreadsheetml.sheet;charset=utf-8' })
+          this.$global.downFile(blob,"资产.xlsx");
+        })
+        .catch(err =>{})
+    },
     hasNoEditable (scope) {
       // return true
       // return !scope.row.assetInfos.filter(item => item.editable).length
@@ -321,8 +369,8 @@ export default {
       //   }
       // })
       const vm = this;
-      this.folderOption.assetInfo = row
-      // this.$store.commit('ADD_DIRECTORIESTOASSET', { id: row.id, assetInfo: row })
+      this.folderOption.assetInfo = row;
+      sessionStorage.setItem('saveEntityUuid', row.entityUuid);
       this.$nextTick(() => {
         vm.$refs.folderTree.init()
       })
@@ -354,117 +402,63 @@ export default {
         this.$message.info('请勾选可提交审核的资产')
       }
     },
-    // 获取字典值
-    getDictionary(assetType) {
-      this.assetTypeList = {};
-      // 订单
-      if (assetType === 'TRADEORDER') {
-        // 订单类型
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.orderType)) {
-          this.assetTypeList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.orderType]);
-        }else{
-          this.getDictionaryApi(this.assetTypeList, this.$appConst.dictionaryType.orderType);
-        }
-        // 是否已融资
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.financeStatus)) {
-          this.financeStatusList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.financeStatus]);
-        }else{
-          this.getDictionaryApi(this.financeStatusList, this.$appConst.dictionaryType.financeStatus);
-        }
-      }
-      // 发票
-      if (assetType === 'TRADEINVOICE') {
-        // 发票类型
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.invoiceType)) {
-          this.assetTypeList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.invoiceType]);
-        }else{
-          this.getDictionaryApi(this.assetTypeList, this.$appConst.dictionaryType.invoiceType);
-        }
-        // 发票状态
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.invoiceStatus)) {
-          this.invoiceStatusList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.invoiceStatus]);
-        }else{
-          this.getDictionaryApi(this.invoiceStatusList, this.$appConst.dictionaryType.invoiceStatus);
-        }
-        // 发票类型
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.invoiceType)) {
-          this.invoiceTypesList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.invoiceType]);
-        }else{
-          this.getDictionaryApi(this.invoiceTypesList, this.$appConst.dictionaryType.invoiceType);
-        }
-        // 是否已融资
-         if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.financeStatus)) {
-          this.financeStatusList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.financeStatus]);
-        }else{
-          this.getDictionaryApi(this.financeStatusList, this.$appConst.dictionaryType.financeStatus);
-        }
-        // 发票核验状态
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.invoiceCheckStatus)) {
-          this.invoiceCheckStatusList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.invoiceCheckStatus]);
-        }else{
-          this.getDictionaryApi(this.invoiceCheckStatusList, this.$appConst.dictionaryType.invoiceCheckStatus);
-        }
-      }
-      // 结算单
-      if (assetType === 'TRADESETTLEMENT') {
-        // 是否已融资
-         if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.financeStatus)) {
-          this.financeStatusList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.financeStatus]);
-        }else{
-          this.getDictionaryApi(this.financeStatusList, this.$appConst.dictionaryType.financeStatus);
-        }
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.invoiceStatus)) {
-          this.invoiceStatusList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.invoiceStatus]);
-        }else{
-          this.getDictionaryApi(this.invoiceStatusList, this.$appConst.dictionaryType.invoiceStatus);
-        }
-        // 发票核验状态
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.invoiceCheckStatus)) {
-          this.invoiceCheckStatusList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.invoiceCheckStatus]);
-        }else{
-          this.getDictionaryApi(this.invoiceCheckStatusList, this.$appConst.dictionaryType.invoiceCheckStatus);
-        }
-        // 结算单类型
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.settlementType)) {
-          this.assetTypeList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.settlementType]);
-        }else{
-          this.getDictionaryApi(this.assetTypeList, this.$appConst.dictionaryType.settlementType);
-        }
-      }
-      // 过磅单
-      if (assetType === 'TRADEPONDERATION') {
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.pounderationType)) {
-          this.assetTypeList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.pounderationType]);
-        }else{
-          this.getDictionaryApi(this.assetTypeList, this.$appConst.dictionaryType.pounderationType);
-        }
-      }
-      // 收、发货单
-      if (assetType === 'TRADEDLVRGOODS') {
-        // //收货类型'TRADERECVGGOODS'
-        // if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.receiveType)) {
-        //   this.receiveTypeList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.receiveType]);
-        // }else{
-        //   this.getDictionaryApi(this.receiveTypeList, this.$appConst.dictionaryType.receiveType);
-        // }
-        //发货类型
-        if(this.DICTIONARY.hasOwnProperty(this.$appConst.dictionaryType.deliveryType)) {
-          this.deliveryTypeList = Object.assign({}, this.DICTIONARY[this.$appConst.dictionaryType.deliveryType]);
-        }else{
-          this.getDictionaryApi(this.deliveryTypeList, this.$appConst.dictionaryType.deliveryType);
-        }
-      }
-    },
     // 字典请求数据
     getDictionaryApi(list, val) {
-      this.$http.get(this.$apiUrl.dictionary.codeList + '?code=' + val)
+      this.$http.get(this.$apiUrl.dictionary.codeList + '?code=CLASS_TYPE')
         .then(res => {
           if (res.data.status !== 200) return;
+          this.typeOptions = [];
           res.data.data.forEach(item=>{
-            this.$set(list, item.value, item.label);
+            if(item.value === 'Boolean') {
+              this.booleanType = item.id
+            }
+            if(item.value === 'Date') {
+              this.dateType = item.id
+            }
+            if(item.value === 'Integer') {
+              this.integerType = item.id
+            }
           })
-          this.SET_DICTIONARY({value1:list,value2:val});
+          this.queryAssetSeting();
         }).catch(err => {
+          this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
+        });
+    },
+    queryAssetSeting() {
+      var vm = this;
+      const params = {
+        tableEnName: this.$appConst.tableEnNameAsset,
+        projectName: this.$appConst.setProjectName
+      }
+      const loading = this.$loading({
+        lock: true,
+        text: 'Loading',
+        spinner: 'el-icon-loading',
+        background: 'rgba(0, 0, 0, 0.7)'
+      });
+      this.$http.get(`${this.$apiUrl.tableAssetName}`, { params })
+      // this.$http.get(`${this.$apiUrl.tablefile}`, { params })
+        .then(res => {
+          loading.close()
+          if (res.data.status !== 200) return;
+          this.totalCount = res.data.data.totalElements;
+          let content = res.data.data;
+          content.forEach(item => {
+            if(item.fieldType === this.booleanType) {
+              vm.booleanList = item.fieldEnName
+            }
+            if(item.fieldType === this.dateType) {
+              vm.dateList = item.fieldEnName
+            }
+            if(item.fieldType === this.integerType) {
+              vm.integerList = item.fieldEnName
+            }
+          })
+          this.mainTable.tableData = content;
+          this.ruleForm.tabData = content;
+        }).catch(err => {
+          loading.close()
+          this.totalCount = 0;
           this.$message.warning(err.data.message || '服务器错误，请稍后再试!');
         });
     },
@@ -537,6 +531,8 @@ export default {
         return;
       }
       // datas = datas.sort((a, b) => a.sortNo - b.sortNo);
+      vm.exportContents = [];
+      vm.exportContents2 = [];
       datas.forEach(item=>{
         // 质检单管理中检验项目是一个数组，所以不在其中展示。
         if([item['fieldEnName']]=='inspectionItem') return;
@@ -552,6 +548,8 @@ export default {
         // 表格中需要展示的字段
         if(item.listVisible){
           vm.mainTable.tableHeader[item['fieldEnName']] = item['fieldCnName'];
+          vm.exportContents.push({"enName": item.fieldEnName, "cnName": item.fieldCnName})
+          vm.exportContents2.push(item['fieldEnName'])
           // vm.mainTable.tableWidth[item['fieldEnName']] = item['fieldCnName'].length > 6 ? 230 : item['fieldCnName'].length * 30
         }
         // 添加表单需要展示的字段
@@ -625,10 +623,8 @@ export default {
     // },
     // 判断什么情况下可以勾选。
     selectable (row) {
-      // 发货单有这个功能。
-      // if(this.assetType != 'TRADEDLVRGOODS') return true;
-      return true
-      if (row.recvgStatus === 'FALSE' ||　row.recvgStatus === 'false'||　row.recvgStatus === false || row.auditSubmit) {
+      // return true
+      if (row.recvgStatus === 'FALSE' ||　row.recvgStatus === 'false'||　row.recvgStatus === false || row.auditSubmitted) {
         return true
       } else {
         return false
@@ -692,7 +688,7 @@ export default {
         }
         // 添加时字段都是可以编辑的。
         this.$refs.addDelv.setDisabled(disabledArray);
-        this.$refs.addDelv.init(this.assetType,this.businessTypeVal,true,this.formItem, this.necessaryItem);
+        this.$refs.addDelv.init(this.assetType,this.businessTypeVal,true,this.formItem, this.necessaryItem, this.booleanList, this.dateList, this.integerList);
       });
     },
     // 判断是不是根节点
@@ -726,9 +722,9 @@ export default {
       }
     },
     handleAddAsset() {
-      this.selectBusinessTypeClose('');
-      // this.$refs.selectBusinessType.show();
-      // this.addFormTitle = '添加'+ this.$appConst.dataType[this.assetType]
+      // this.selectBusinessTypeClose('');
+      this.$refs.selectBusinessType.show(true);
+      this.addFormTitle = '添加'
     },
     openTabs(isTrue) {
       if (isTrue) {

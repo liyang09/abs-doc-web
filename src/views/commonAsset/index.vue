@@ -715,7 +715,7 @@ export default {
       // if(this.assetType == 'TRADEAVIATIONSERVICEFEE' || this.assetType == 'TRADEAVIATIONOILDATA' ||this.assetType == 'TRADEEAGLECOINTRANSACTION' || this.assetType == 'TRADETICKETSALES'){
       //   return false;
       // }
-      if(this.assetType == 'TRADEWAREHOUSE'){
+      if(this.assetType == this.$appConst.tableEnNameAsset){
         return false;
       }
       return true;
@@ -912,7 +912,8 @@ export default {
         }
       };
       if(vm.assetType === vm.$appConst.tableEnNameAsset) {
-        origionParams.condition.entityType = vm.$appConst.auditTypeSet;
+        origionParams.condition.entityType = vm.$appConst.tableEnNameAsset;
+        // origionParams.condition.entityType = vm.$appConst.auditTypeSet;
         searchForm['auditSubmitted'] = false;
         // searchForm['auditSubmit'] = false;
       }

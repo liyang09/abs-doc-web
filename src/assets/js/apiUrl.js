@@ -7,6 +7,7 @@ export let apiUrl = {
     orguserList:apiGateway + '/orguser/org/v1.0/list',//获取企业列表
     orguserDetail:apiGateway + '/orguser/org/v1.0/detail/',//根据id去查询详情
     fileQuery:apiGateway + '/files/file/query/',//文件预览
+    fileUpload:apiGateway + '/files/file/upload',//文件上传
     uploadFileApi:uploadFile + fileQuery,//文件上传
     businessAuthorize:currentApiUrl,//企业授权
     assetAuth:currentApiUrl+ '/auth/to/',//资产授权
@@ -64,6 +65,7 @@ export let apiUrl = {
     tableConfigName3:currentApiUrl + '/asset/pattern-node-type/get/asset-type-name',//根据属性表明查询展示的字段
     queryAggregation:currentApiUrl  + '/asset/queryAggregation',//聚合查询总结算单金额和总净重
     exportDataToExcel:currentApiUrl + '/file/exportDataToExcel',
+    exportDataToExcel2:currentApiUrl2 + '/asset/exportDataByAttributeToExcel',//文件导出
     invoiceUpload:apiGateway + '/files/file/upload/single',//发票部分文件上传
     saveAssetInvoice:currentApiUrl +　'/asset/invoice-save',//发票部分保存
     batchSaveAsset:currentApiUrl + '/asset/invoice-imgs',//发票批量保存

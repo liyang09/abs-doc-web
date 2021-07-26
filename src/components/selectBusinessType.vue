@@ -1,4 +1,5 @@
 <template>
+  <div>
   <el-dialog v-dialogDrag  title="业务模式" :close-on-click-modal="false" :append-to-body="true"
               :visible.sync="dialogVisible"
               :before-close="close" width="500px">
@@ -27,6 +28,7 @@
             </el-button>
         </div>
   </el-dialog>
+  </div>
 </template>
 <style  lang="scss">
 .el-dialog__footer{
@@ -91,10 +93,40 @@ export default {
     close() {
       this.dialogVisible = false;
     },
-    show() {
-      // this.dialogVisible = true;
-      this.getPlatFormOptions();
-    }
+    show(isfromDoc) {
+      this.dialogVisible = true;
+      if(isfromDoc) {
+        this.searchCompany()
+      } else {
+        this.getPlatFormOptions();
+      }
+    },
+    searchCompany() {
+      const vm = this;
+      const params = {
+        "page":this.page-1,
+        "size":this.pageSize,
+        "condition":{"entityType":`${this.$appConst.tableEnNameCompany}`},
+        // "sortDirection":"DESC"
+      }
+      vm.platFormOptions = [];
+      this.loading = true;
+      const url = `${this.$apiUrl.queryCompany}`;
+      this.$http.post(url,params)
+        .then(res => {
+          this.loading = false;
+          if (res.data.status !== 200) return;
+          res.data.data.content.forEach(item => {
+            vm.platFormOptions.push({
+              label:item.orgName,
+              value:item.entityUuid
+            });
+          })
+        }).catch(err => {
+          this.loading = false;
+          this.$message.warning(err.message || '服务器错误，请稍后再试!');
+        });
+    },
   }
 };
 </script>
