@@ -55,14 +55,14 @@
                         @click="zhongdeng(scope.row)">
                         中登查询
                     </el-button>
-                    <el-button
+                    <!-- <el-button
                         class="collectBtn"
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
                         @click="edit(scope.row)">
                         修改
-                    </el-button>
+                    </el-button> -->
                     <el-button
                         class="collectBtn redBtn"
                         size="medium"
