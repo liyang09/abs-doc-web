@@ -12,7 +12,8 @@ const currentCssStyle = 'defaultStyle';//配置主题色模板
 const loginNavigation = "https://192.168.20.226/web/sso/#"// 跳转到统一登录页面 https://192.168.20.70/web/sso/#
 const home = "http://localhost:8082/#/readme";//跳到本系统的首页;
 const ClIENT_ID = "94786734adc64e46a6b8281fbecb2539";//从认证中心获取此系统的ClIENT_ID 
-const SYSTEMS = ["trade"];//从认证中心获取此系统的名称
+// const SYSTEMS = ["trade"];//从认证中心获取此系统的名称
+const SYSTEMS = ["ev-doc-thbl"];//从认证中心获取此系统的名称
 const projectAddress = [{
     "value": "https://test.easy-sight.com/web/trade/#/readme",
     "label": " 股份系统1"

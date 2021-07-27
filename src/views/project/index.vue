@@ -68,6 +68,7 @@
                         size="medium"
                         type="text"
                         style="margin-left:0px; "
+                        :disabled = "scope.row.status !== 'DRAFT'"
                         @click="release(scope.row)">
                         发布
                     </el-button>

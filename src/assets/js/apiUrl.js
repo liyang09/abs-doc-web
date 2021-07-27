@@ -75,6 +75,7 @@ export let apiUrl = {
 
     //文档管理原来的接口
     assetUrl: apiGateway + '/asset-config',
+    edocU:apiGateway+'/edoc-thbl',
 
     //文档管理新的接口
     tableAssetName:currentApiUrl + '/asset/attribute-config/table/list',//配置查询
